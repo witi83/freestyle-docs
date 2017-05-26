@@ -57,6 +57,7 @@ lazy val docs = (project in file("."))
   .settings(
     scalacOptions in Tut ~= (_ filterNot Set("-Ywarn-unused-import", "-Xlint").contains)
   )
+  .disablePlugins(CoursierPlugin)
   .enablePlugins(MicrositesPlugin)
 
 def fsDep(suffix: String): ModuleID = %%(s"freestyle-$suffix", fsVersion) changing ()
