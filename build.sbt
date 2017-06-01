@@ -26,6 +26,7 @@ lazy val docs = (project in file("."))
       GitHubIssuesBadge.apply
     )
   )
+  .settings(scalametaSettings)
   .settings(
     resolvers += Resolver.bintrayRepo("kailuowang", "maven"),
     libraryDependencies ++= Seq(
@@ -60,3 +61,13 @@ lazy val docs = (project in file("."))
   .enablePlugins(MicrositesPlugin)
 
 def fsDep(suffix: String): ModuleID = %%(s"freestyle-$suffix", fsVersion) changing ()
+
+lazy val scalametaSettings = Seq(
+  libraryDependencies -= compilerPlugin(%%("paradise") cross CrossVersion.patch),
+  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M8" cross CrossVersion.full),
+  libraryDependencies += "org.scalameta" %% "scalameta" % "1.8.0" % Provided,
+  scalacOptions += "-Xplugin-require:macroparadise",
+  scalacOptions in (Compile, console) := Seq(), // macroparadise plugin doesn't work in repl yet.
+  sources in (Compile, doc) := Nil // macroparadise doesn't work with scaladoc yet.
+)
+
