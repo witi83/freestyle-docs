@@ -2,7 +2,7 @@ import sbtorgpolicies.model._
 import sbtorgpolicies.templates.badges._
 import sbtorgpolicies.runnable.syntax._
 
-lazy val fsVersion = "0.1.2-SNAPSHOT"
+lazy val fsVersion = Option(sys.props("frees.version")).getOrElse("0.2.0")
 
 lazy val docs = (project in file("."))
   .settings(micrositeSettings: _*)
